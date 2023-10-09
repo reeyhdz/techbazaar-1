@@ -20,8 +20,7 @@ export function AuthProvider(props) {
     try {
       tokenController.settoken(token)
       setAccessToken(token);
-      console.log(token)
-      const getMeResponse = await userController.getMe(token);
+      const getMeResponse = await userController.getMe();
       setUser(getMeResponse);
       return;
     } catch (error) {
