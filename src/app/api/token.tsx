@@ -20,7 +20,6 @@ export class Token {
     if (currentDate > expireDate) {
       return true;
     }
-
     return false;
   }
 }

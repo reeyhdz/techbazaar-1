@@ -13,22 +13,43 @@ export function AuthProvider(props) {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setLoading(false);
-  }, [])
+    (async () => {
+      const token = tokenController.gettoken();
+
+      if (!token) {
+        logout();
+        setLoading(false);
+        return;
+      }
+
+      if (tokenController.hasExpired(token)) {
+        logout();
+      } else {
+        await login(token);
+      }
+    })();
+  }, []);
 
   const login = async (token) => {
     try {
-      tokenController.settoken(token)
+      tokenController.settoken(token);
+      const response = await userController.getMe();
+      setUser(response);
       setAccessToken(token);
-      const getMeResponse = await userController.getMe();
-      setUser(getMeResponse);
-      return;
+      console.log(user, accessToken)
     } catch (error) {
-      throw new Error(error);
+      console.error(error);
+
     } finally {
       setLoading(false);
     }
   }
+
+  const logout = () => {
+    tokenController.removeToken();
+    setAccessToken(null);
+    setUser(null);
+  };
 
   const data = {
     accessToken,

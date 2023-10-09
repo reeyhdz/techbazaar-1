@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Token } from "../api";
 
 export async function authFetch(url, params?) {
@@ -24,7 +25,7 @@ export async function authFetch(url, params?) {
       };
 
       try {
-        return await fetch(url, paramsTemp);
+        return await axios.get(url, paramsTemp);
       } catch (error) {
         return error;
       }

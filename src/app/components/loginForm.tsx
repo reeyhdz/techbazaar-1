@@ -35,7 +35,6 @@ const Form = () => {
        setSubmitting(true);
        const response = await authController.login(values);
        login(response.data.token)
-       console.log(response);
        router.push('/');
       } catch (error) {
        throw new Error(error);
