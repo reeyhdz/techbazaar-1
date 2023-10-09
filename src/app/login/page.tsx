@@ -1,5 +1,7 @@
 'use client';
 import { Formik, Field } from "formik";
+import {Auth} from '../api/auth';
+import { useRouter } from "next/navigation";
 
 import {
   Box,
@@ -13,7 +15,10 @@ import {
   VStack
 } from "@chakra-ui/react";
 
+const authController = new Auth();
+
 export default function LoginScreen() {
+  const router = useRouter();
   return (
     <Flex bg="gray.100" align="center" justify="center" h="100vh">
       <Box bg="white" p={6} rounded="md" w={64}>
@@ -26,14 +31,20 @@ export default function LoginScreen() {
           }
          return errors;
        }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
-           setSubmitting(false);
-         }, 400);
+       onSubmit={async (values, { setSubmitting }) => {
+         try {
+          setSubmitting(true);
+          const response = authController.login(values);
+          console.log(response);
+          router.push('/');
+         } catch (error) {
+          throw new Error(error);
+         } finally {
+          setSubmitting(false);
+         }
        }}
      >
-          {({ values, handleSubmit, errors, touched, isSubmitting }) => (
+          {({ values, handleSubmit, errors, touched, isSubmitting, handleChange }) => (
             <form onSubmit={handleSubmit}>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
@@ -44,7 +55,9 @@ export default function LoginScreen() {
                     name="email"
                     type="email"
                     variant="filled"
+                    onChange={handleChange}
                     value={values.email}
+                    onError={errors.email}
                   />
                 </FormControl>
                 <FormControl isInvalid={!!errors.password && touched.password}>
@@ -53,9 +66,11 @@ export default function LoginScreen() {
                     as={Input}
                     id="password"
                     name="password"
+                    onChange={handleChange}
                     type="password"
                     variant="filled"
                     value={values.password}
+                    onError={errors.password}
                   />
                   <FormErrorMessage>{errors.password}</FormErrorMessage>
                 </FormControl>
