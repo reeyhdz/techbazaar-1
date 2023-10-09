@@ -11,7 +11,7 @@ export class Auth {
     try {
       const response = await axios.post(`${BASE_URL}${ENDPOINTS.LOGIN}`, data)
       if (response.status !== 200) throw new Error(response.statusText);
-      return response.data;
+      return response;
 
     } catch (error) {
       throw new Error(error.message);

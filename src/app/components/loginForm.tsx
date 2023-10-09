@@ -2,6 +2,7 @@
 import React from 'react'
 import { Formik, Field } from "formik";
 import {Auth} from '../api/auth';
+import { useAuth } from '../hooks';
 import { useRouter } from "next/navigation";
 import {
   Button,
@@ -15,6 +16,8 @@ import {
 const Form = () => {
   const authController = new Auth();
   const router = useRouter();
+  const {login} = useAuth();
+
   return (
     <Formik
     initialValues={{ email: '', password: '' }}
@@ -30,7 +33,8 @@ const Form = () => {
     onSubmit={async (values, { setSubmitting }) => {
       try {
        setSubmitting(true);
-       const response = authController.login(values);
+       const response = await authController.login(values);
+       login(response.data.token)
        console.log(response);
        router.push('/');
       } catch (error) {
