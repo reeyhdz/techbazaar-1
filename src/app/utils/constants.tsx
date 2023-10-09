@@ -1,12 +1,10 @@
 export const ENV = {
-  SERVER_HOST: 'http://localhost:3000',
-  API_HOST: 'http://localhost:3000/api',
+  SERVER_HOST: 'https://techbazaar-api.fly.dev/api/',
+  API_HOST: 'https://techbazaar-api.fly.dev/api/',
   ENDPOINTS: {
     AUTH: {
-      LOGIN: '/auth/login',
-      REGISTER: '/auth/register',
-      LOGOUT: '/auth/logout',
-      ME: '/auth/me'
+      LOGIN: 'users/login',
+      REGISTER: 'users/signup',
     },
     }
   }

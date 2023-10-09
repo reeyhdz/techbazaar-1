@@ -1,5 +1,5 @@
 'use client';
-import Form from "../components/loginForm";
+import Form from "../components/signUpForm";
 
 import {
   Box,
