@@ -1,7 +1,15 @@
+"use client";
+
 import Image from 'next/image'
 import styles from './page.module.css'
 
+import { useAuth } from './hooks/useAuth'
+
 export default function Home() {
+const { user, accessToken } = useAuth();
+
+console.log(user, accessToken);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>

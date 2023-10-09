@@ -1,7 +1,8 @@
 import { useEffect, useState, createContext } from "react";
-import { Token } from "../api";
+import { User, Token } from "../api";
 
 const tokenController = new Token();
+const userController = new User();
 
 export const AuthContext = createContext({});
 
@@ -19,20 +20,24 @@ export function AuthProvider(props) {
     try {
       tokenController.settoken(token)
       setAccessToken(token);
-      setLoading(false);
+      console.log(token)
+      const getMeResponse = await userController.getMe(token);
+      setUser(getMeResponse);
+      return;
     } catch (error) {
-      setLoading(false);
       throw new Error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
-
   const data = {
     accessToken,
-    // user,
+    user,
     login,
     logout: null,
   };
+
   return (
     <AuthContext.Provider value={data}>
       {children}
