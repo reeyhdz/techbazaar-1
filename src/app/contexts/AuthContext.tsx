@@ -55,7 +55,7 @@ export function AuthProvider(props) {
     accessToken,
     user,
     login,
-    logout: null,
+    logout,
   };
 
   return (
