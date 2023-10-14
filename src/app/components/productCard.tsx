@@ -62,6 +62,7 @@ function ProductCard(props?) {
               rounded="lg"
               shadow="lg"
               position="relative">
+              <Image src={"/noProduct.png"} alt={`No product`} roundedTop="lg" />
               <Box p="6">
                 <Flex mt="1" justifyContent="space-between" alignContent="center">
                   <Box

@@ -31,6 +31,8 @@ export const Products = () => {
     }
     }, [products]);
 
+    if(!products) return null;
+
   return (
     <Grid
     w="full"
