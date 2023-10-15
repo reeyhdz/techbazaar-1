@@ -5,7 +5,8 @@ import ProductCard from './productCard'
 
 const productController = new Product();
 
-export const Products = () => {
+export const Products = (props?) => {
+  const { search } = props;
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -21,13 +22,35 @@ export const Products = () => {
     }
   } , []);
 
-  useEffect(() => {
+  const searchProducts = useCallback((text) =>{
     try {
-      getProducts();
-      setIsLoaded(true);
+      const getProducts = async () => {
+        const products = await productController.searchProducts(text);
+        setProducts(products);
+      }
+      return getProducts();
     } catch (error) {
-      setIsLoaded(false);
       console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!search){
+      try {
+        getProducts();
+        setIsLoaded(true);
+      } catch (error) {
+        setIsLoaded(false);
+        console.error(error);
+      }
+    } else {
+      try {
+        searchProducts(search);
+        setIsLoaded(true);
+      } catch (error) {
+        setIsLoaded(false);
+        console.error(error);
+      }
     }
     }, [products]);
 

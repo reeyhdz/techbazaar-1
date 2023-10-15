@@ -51,6 +51,8 @@ export default function Header(props?) {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
+          as={'a'}
+          href={'/'}
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
@@ -272,6 +274,6 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'Store',
-    href: '#',
+    href: '/search',
   },
 ]
