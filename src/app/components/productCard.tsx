@@ -56,6 +56,7 @@ function ProductCard(props?) {
     <SimpleGrid columns={4} spacingY={10} spacingX={"10%"} >
 {map(products, (product) => (
 <Box
+              key={product._id}
               bg={'#f3f3f3'}
               maxW="sm"
               borderWidth="1px"
